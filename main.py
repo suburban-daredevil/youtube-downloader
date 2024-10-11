@@ -4,6 +4,6 @@ from download_video import download_video
 url = 'https://youtu.be/DhCYfOiDUEw'
 
 # specify the path of the directory where you want your video to be saved
-directory_path = 'D:/songs'
+directory_path = 'D:/Songs'
 
 download_video(url, directory_path)

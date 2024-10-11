@@ -1,7 +1,7 @@
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
 import subprocess
-import os
+import os, signal
 from get_best_resolution import select_best_res
 
 def download_video(video_url, directory_path):
@@ -34,7 +34,9 @@ def download_video(video_url, directory_path):
     path_to_save = directory_path + '/' + output_name
     cmd = f"ffmpeg -i {video_name} -i {audio_name} -c copy {path_to_save}"
     print(cmd)
-    p = subprocess.run(cmd, stdout=subprocess.PIPE, shell=True)
+
+    pro = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+    os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
 
     # delete the unwanted files
     os.remove(video_name)
